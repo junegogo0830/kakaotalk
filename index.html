@@ -1,0 +1,28 @@
+<script>
+Kakao.init('068ae0e527216dfc1c1f81089bb4ed55');
+
+function loginWithKakao() {
+  Kakao.Auth.login({
+    scope: 'talk_message',
+    success: function(authObj) {
+      console.log(authObj);
+      document.getElementById('token-result').innerText = '로그인 성공 👍';
+      document.getElementById('sendBtn').style.visibility = 'visible';
+    },
+    fail: function(err) {
+      alert(JSON.stringify(err));
+    }
+  });
+}
+
+function sendToMe() {
+  Kakao.API.request({
+    url: '/v2/api/talk/memo/send',
+    data: {
+      template_id: 1420276
+    }
+  })
+  .then(() => alert('전송 완료 👍'))
+  .catch(err => alert(JSON.stringify(err)));
+}
+</script>
